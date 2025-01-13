@@ -1,0 +1,8 @@
+
+fn add (x, y) {
+    let result = x+ y ; 
+    result
+}
+
+const num = add(2, 4);
+print(num)
