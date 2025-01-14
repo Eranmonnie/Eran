@@ -67,13 +67,4 @@ fn add (x, y) {
 const num = add(2, 4);
 print(num)
 ```
-## Language Features
-
-The custom programming language supports the following features:
-- Variable declaration and assignment
-- Function declaration and calls
-- Native functions
-- Numeric operations
-
-However, it does not support strings and conditional statements.
 
