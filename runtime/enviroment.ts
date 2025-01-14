@@ -1,3 +1,11 @@
+/**
+ * enviroment.ts
+ * This file defines the runtime environment for a custom programming language.
+ * It includes the implementation of the `Enviroment` class, which is responsible for
+ * variable storage and lookup, and the `createGlobalEnv` function, which initializes
+ * the global environment with predefined variables and native functions.
+ */
+
 import {
   MAKE_BOOL,
   MAKE_NATIVE_FN,
@@ -6,6 +14,18 @@ import {
   RuntimeVal,
 } from "./value";
 
+/**
+ * Creates and initializes the global environment with predefined variables and native functions.
+ *
+ * The following variables are declared in the global environment:
+ * - `true`: A boolean value representing true.
+ * - `false`: A boolean value representing false.
+ * - `null`: A null value.
+ * - `print`: A native function that prints its arguments to the console.
+ * - `time`: A native function that returns the current timestamp in milliseconds.
+ *
+ * @returns {Enviroment} The initialized global environment.
+ */
 export const createGlobalEnv = () => {
   const env = new Enviroment();
   env.declareVar("true", MAKE_BOOL(true), true);
@@ -29,11 +49,19 @@ export const createGlobalEnv = () => {
   return env;
 };
 
+/**
+ * this class represents an environment for variable storage and lookup.
+ * Supports nested environments with a parent-child relationship.
+ */
 export default class Enviroment {
   private parent?: Enviroment;
   private variables: Map<string, RuntimeVal>;
   private constants: Set<string>;
 
+  /**
+   * Creates an instance of Enviroment.
+   * @param parentENV - The parent environment, if any.
+   */
   constructor(parentENV?: Enviroment) {
     const envGlobal = parentENV ? true : false;
     this.parent = parentENV;
@@ -41,6 +69,14 @@ export default class Enviroment {
     this.constants = new Set();
   }
 
+  /**
+   * Declares a variable in the current environment.
+   * @param varname - The name of the variable.
+   * @param value - The value of the variable.
+   * @param constant - Whether the variable is a constant.
+   * @returns The value of the declared variable.
+   * @throws {Error} If the variable is already declared in this scope.
+   */
   public declareVar(
     varname: string,
     value: RuntimeVal,
@@ -56,11 +92,24 @@ export default class Enviroment {
     return value;
   }
 
+  /**
+   * Looks up a variable in the current environment or parent environments.
+   * @param varname - The name of the variable.
+   * @returns The value of the variable.
+   * @throws {Error} If the variable cannot be resolved.
+   */
   public lookupVar(varname: string): RuntimeVal {
     const env = this.resolve(varname);
     return env.variables.get(varname) as RuntimeVal;
   }
 
+  /**
+   * Assigns a value to an existing variable in the current environment or parent environments.
+   * @param varname - The name of the variable.
+   * @param value - The new value of the variable.
+   * @returns The new value of the variable.
+   * @throws {Error} If the variable is a constant or cannot be resolved.
+   */
   public asignVar(varname: string, value: RuntimeVal): RuntimeVal {
     const env = this.resolve(varname);
     if (env.constants.has(varname)) {
@@ -70,6 +119,12 @@ export default class Enviroment {
     return value;
   }
 
+  /**
+   * Resolves the environment in which a variable is declared.
+   * @param varname - The name of the variable.
+   * @returns The environment in which the variable is declared.
+   * @throws {Error} If the variable cannot be resolved.
+   */
   public resolve(varname: string): Enviroment {
     if (this.variables.has(varname)) {
       return this;

@@ -1,4 +1,14 @@
-import { create } from "domain";
+
+/**
+ * main.ts
+ * This is the main entry point for a custom programming language interpreter.
+ * It can run programs from a file or start a Read-Eval-Print Loop (REPL) for interactive use.
+ * 
+ * Usage:
+ * - To run a program from a file, call the `run` function with the file path as an argument.
+ * - To start the REPL, call the `repl` function.
+ */
+
 import { Parser } from "./frontend/parser";
 import Enviroment, { createGlobalEnv } from "./runtime/enviroment";
 import { evaluate } from "./runtime/interpreter";
@@ -7,6 +17,14 @@ import fs from "fs";
 
 run("text.txt");
 
+/**
+ * Runs a custom programming language program from a file.
+ *
+ * @async
+ * @function run
+ * @param {string} file - The path to the file containing the program.
+ * @returns {Promise<void>} A promise that resolves when the program finishes running.
+ */
 async function run(file: string) {
   const parser = new Parser();
   const env = createGlobalEnv();
@@ -17,6 +35,15 @@ async function run(file: string) {
   // console.log(result);
 }
 
+/**
+ * Starts a Read-Eval-Print Loop (REPL) for the custom programming language.
+ * The REPL reads input from the standard input, parses it, evaluates it, and prints the result.
+ * It continues to run until the user inputs "exit" or an empty input.
+ *
+ * @async
+ * @function repl
+ * @returns {Promise<void>} A promise that resolves when the REPL exits.
+ */
 async function repl() {
   const parser = new Parser();
   const env = createGlobalEnv();
