@@ -32,6 +32,16 @@ This project is a custom programming language, interpreter,ERAN implemented in T
 - `runtime/value.ts`: Defines various types and utility functions for runtime values.
 - `text.txt`: A sample program written in the custom programming language.
 
+## Language Features
+
+The custom programming language supports the following features:
+- Variable declaration and assignment
+- Function declaration and calls
+- Native functions
+- Numeric operations
+
+However, it does not support strings and conditional statements for now.
+
 ## Usage
 
 ### Running a Program from a File
@@ -57,4 +67,13 @@ fn add (x, y) {
 const num = add(2, 4);
 print(num)
 ```
-This program defines a function add that adds two numbers and prints the result of add(2, 4).
+## Language Features
+
+The custom programming language supports the following features:
+- Variable declaration and assignment
+- Function declaration and calls
+- Native functions
+- Numeric operations
+
+However, it does not support strings and conditional statements.
+
